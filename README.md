@@ -6,19 +6,7 @@
 [![SchemDraw](https://img.shields.io/badge/SchemDraw-0.23-green)](https://schemdraw.readthedocs.io/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](./LICENSE)
 
-╭──────────────────────────────────────────────────────────────╮
-│  "Draw an RC low-pass filter"                                │
-│                                                              │
-│          ╔══════════╗                                        │
-│    ──────╢ R1  1kΩ  ╟──────┬──────                           │
-│          ╚══════════╝      │                                 │
-│                           ═╪═ C1                             │
-│                            │  10μF                           │
-│                           ─┴─                                │
-│                            ═══ GND                           │
-│                                                              │
-│  ✅ Renders in seconds · SVG / PNG · Iterate instantly       │
-╰──────────────────────────────────────────────────────────────╯
+
 ```
 
 <!-- ────────────────────────────────────────────────── -->
