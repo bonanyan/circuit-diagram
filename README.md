@@ -1,13 +1,13 @@
 # ─── Circuit Diagram ───
 
-> AI 驱动的电路图生成器 · 自然语言 → 精美电路原理图
+> AI-powered circuit diagram generator · Natural language → publication-quality schematics
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![SchemDraw](https://img.shields.io/badge/SchemDraw-0.23-green)](https://schemdraw.readthedocs.io/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](./LICENSE)
 
 ╭──────────────────────────────────────────────────────────────╮
-│  「给我画一个 RC 低通滤波器」                                    │
+│  "Draw an RC low-pass filter"                                │
 │                                                              │
 │          ╔══════════╗                                        │
 │    ──────╢ R1  1kΩ  ╟──────┬──────                           │
@@ -17,46 +17,48 @@
 │                           ─┴─                                │
 │                            ═══ GND                           │
 │                                                              │
-│  ✅ 3 秒出图 · SVG / PNG · 即改即得                             │
+│  ✅ Renders in seconds · SVG / PNG · Iterate instantly       │
 ╰──────────────────────────────────────────────────────────────╯
 ```
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ 用途
+## ✦ What It Does
 
-**circuit-diagram** 是一个 Reasonix / Claude Code 的 AI Skill，基于 Python 的 [SchemDraw](https://schemdraw.readthedocs.io/) 库，让你用自然语言或 SPICE 网表直接生成排版良好的电路原理图。
+**circuit-diagram** is an AI skill for Reasonix / Claude Code built on Python's [SchemDraw](https://schemdraw.readthedocs.io/) library. Generate properly laid-out circuit schematics from natural language or SPICE netlists — no drag-and-drop schematic editor needed.
 
-| 输入 | 输出 |
-|------|------|
-| 「画一个共射极放大器」 | SVG / PNG 电路图 |
-| SPICE 网表 (`.cir`) | 自动解析 → 生成原理图 |
-| 布尔表达式 `(A and B) or C` | 逻辑门电路图 |
-| 时序波形描述 | 时序图 |
-| 流程图描述 | 流程图 |
+| Input | Output |
+|-------|-------|
+| "Draw a common-emitter amplifier" | SVG / PNG schematic |
+| SPICE netlist (`.cir`) | Auto-parsed → schematic |
+| Boolean expression `(A and B) or C` | Logic gate diagram |
+| Timing waveform description | Timing diagram |
+| Flowchart description | Flowchart |
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ 快速开始
+## ✦ Quick Start
 
-### 1. 安装
+### 1. Install
 
 ```bash
 pip install schemdraw matplotlib
 ```
 
-> `matplotlib` 可选：仅 PNG/PDF 输出需要；纯 SVG 只需 `schemdraw`。
+> `matplotlib` is optional — only needed for PNG/PDF output. SVG works with `schemdraw` alone.
 
-### 2. 在 AI 中启用
+### 2. Enable in Your AI
 
-把这个仓库克隆到 Reasonix skills 目录，或通过 install-capability 安装：
+Clone the repo into your Reasonix skills directory:
 
 ```bash
 git clone git@github.com:bonanyan/circuit-diagram.git \
   ~/.reasonix/skills/circuit-diagram
 ```
 
-### 3. 直接使用 SchemDraw 画图
+Or install via `install-capability` from the GitHub URL.
+
+### 3. Draw with SchemDraw Directly
 
 ```python
 import schemdraw
@@ -71,12 +73,12 @@ with schemdraw.Drawing(file='rc-filter.svg') as d:
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ 示例
+## ✦ Examples
 
-### 模拟电路 — RC 低通滤波器
+### Analog — RC Low-Pass Filter
 
 ```
-输入：画一个 RC 低通滤波器，R=1kΩ，C=10μF
+Prompt: Draw an RC low-pass filter, R=1kΩ, C=10μF
 ```
 
 ```python
@@ -93,7 +95,7 @@ with schemdraw.Drawing(file='rc-lowpass.svg'):
     elm.Ground()
 ```
 
-### 逻辑电路 — 布尔表达式
+### Digital — Boolean Expression
 
 ```python
 from schemdraw.parsing import logicparse
@@ -101,47 +103,47 @@ from schemdraw.parsing import logicparse
 logicparse('(A and B) or (not C)', outlabel='$Y$')
 ```
 
-### SPICE 网表 → 原理图
+### SPICE Netlist → Schematic
 
 ```bash
-# 先用 parser 提取拓扑
+# Parse the netlist topology first
 python3 scripts/spice_parser.py amplifier.cir --summary
 
-# 输出:
+# Output:
 #   R1  resistor  nodes=['VCC','BASE']  value=100k
 #   Q1  bjt       nodes=['COL','BASE','EMIT']  value=2N2222
 #   ...
 ```
 
-然后 AI 自动将解析结果转为 SchemDraw 代码并生成图片。
+Then the AI converts the parsed result into SchemDraw code and renders the image.
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ 支持的元素
+## ✦ Supported Elements
 
-| 类别 | 元素 |
-|------|------|
-| **无源元件** | 电阻 (US/IEC/可变)、电容 (普通/极性/可变)、电感、二极管 (整流/齐纳/肖特基/LED) |
-| **电源** | 直流/交流/正弦/脉冲/方波 电压源 & 电流源、电池、接地 |
-| **晶体管** | BJT (NPN/PNP)、JFET、MOSFET (模拟/数字)、IGBT |
-| **运放** | 标准运放、积分器、微分器、比较器 |
-| **逻辑门** | AND / NAND / OR / NOR / XOR / XNOR / NOT / 施密特触发器 |
-| **其他** | 开关、继电器、变压器、光耦、惠斯通电桥、整流桥、连接器、7 段数码管 |
-| **注释** | 电压/电流标签、环路电流、包围圈、标注箭头 |
+| Category | Elements |
+|----------|----------|
+| **Passives** | Resistor (US/IEC/variable), capacitor (standard/polarized/variable), inductor, diode (rectifier/zener/schottky/LED) |
+| **Sources** | DC/AC/sine/pulse/square voltage & current sources, battery, grounds |
+| **Transistors** | BJT (NPN/PNP), JFET, MOSFET (analog/digital), IGBT |
+| **Opamps** | Standard, integrator, differentiator, comparator |
+| **Logic gates** | AND / NAND / OR / NOR / XOR / XNOR / NOT / Schmitt triggers |
+| **More** | Switches, relays, transformers, optocouplers, Wheatstone bridge, rectifier bridge, connectors, 7-segment displays |
+| **Annotations** | Voltage/current labels, loop currents, encircling boxes, annotation arrows |
 
-完整列表见 [`references/element-catalog.md`](references/element-catalog.md)。
+Full catalog: [`references/element-catalog.md`](references/element-catalog.md).
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ 目录结构
+## ✦ Directory Structure
 
 ```
 circuit-diagram/
-├── SKILL.md                         ← Skill 主文件（AI 读这个）
+├── SKILL.md                         ← Skill entry point (the AI reads this)
 ├── references/
-│   └── element-catalog.md           ← 全部元件 & 锚点速查
+│   └── element-catalog.md           ← Full element & anchor reference
 ├── scripts/
-│   └── spice_parser.py              ← SPICE 网表解析器
+│   └── spice_parser.py              ← SPICE netlist → JSON parser
 └── README.md
 ```
 
@@ -154,5 +156,5 @@ Apache-2.0 © bonanyan
 ---
 
 <p align="center">
-  ⚡ 用自然语言画电路 · 一句话搞定原理图 ⚡
+  ⚡ Draw circuits with words · One sentence is all it takes ⚡
 </p>
