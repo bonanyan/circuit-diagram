@@ -5,6 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![SchemDraw](https://img.shields.io/badge/SchemDraw-0.23-green)](https://schemdraw.readthedocs.io/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](./LICENSE)
+[![skills.sh](https://skills.sh/b/bonanyan/circuit-diagram)](https://skills.sh/bonanyan/circuit-diagram)
 
 <!-- ────────────────────────────────────────────────── -->
 
