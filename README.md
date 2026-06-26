@@ -4,7 +4,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![SchemDraw](https://img.shields.io/badge/SchemDraw-0.23-green)](https://schemdraw.readthedocs.io/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue)](./LICENSE)
 
 ╭──────────────────────────────────────────────────────────────╮
 │  「给我画一个 RC 低通滤波器」                                    │
@@ -149,7 +149,7 @@ circuit-diagram/
 
 ## ✦ License
 
-MIT © bonanyan
+Apache-2.0 © bonanyan
 
 ---
 
