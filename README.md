@@ -11,23 +11,9 @@
 
 <!-- ────────────────────────────────────────────────── -->
 
-## ✦ What It Does
+## ✦ Installation
 
-**circuit-diagram** is an AI skill for Reasonix / Claude Code built on Python's [SchemDraw](https://schemdraw.readthedocs.io/) library. Generate properly laid-out circuit schematics from natural language or SPICE netlists — no drag-and-drop schematic editor needed.
-
-| Input | Output |
-|-------|-------|
-| "Draw a common-emitter amplifier" | SVG / PNG schematic |
-| SPICE netlist (`.cir`) | Auto-parsed → schematic |
-| Boolean expression `(A and B) or C` | Logic gate diagram |
-| Timing waveform description | Timing diagram |
-| Flowchart description | Flowchart |
-
-<!-- ────────────────────────────────────────────────── -->
-
-## ✦ Quick Start
-
-### 1. Install
+### 1. Python Dependencies
 
 ```bash
 pip install schemdraw matplotlib
@@ -54,7 +40,7 @@ git clone git@github.com:bonanyan/circuit-diagram.git \
 
 Install via `install-capability` from the GitHub URL.
 
-### 3. Draw with SchemDraw Directly
+### 3. Quick Draw
 
 ```python
 import schemdraw
@@ -66,6 +52,20 @@ with schemdraw.Drawing(file='rc-filter.svg') as d:
     elm.Line().left()
     elm.Ground()
 ```
+
+<!-- ────────────────────────────────────────────────── -->
+
+## ✦ What It Does
+
+**circuit-diagram** is an AI skill for Reasonix / Claude Code built on Python's [SchemDraw](https://schemdraw.readthedocs.io/) library. Generate properly laid-out circuit schematics from natural language or SPICE netlists — no drag-and-drop schematic editor needed.
+
+| Input | Output |
+|-------|-------|
+| "Draw a common-emitter amplifier" | SVG / PNG schematic |
+| SPICE netlist (`.cir`) | Auto-parsed → schematic |
+| Boolean expression `(A and B) or C` | Logic gate diagram |
+| Timing waveform description | Timing diagram |
+| Flowchart description | Flowchart |
 
 <!-- ────────────────────────────────────────────────── -->
 
