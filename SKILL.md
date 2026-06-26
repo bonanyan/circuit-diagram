@@ -47,11 +47,15 @@ When a user requests a circuit diagram, follow this decision tree:
 
 ```
 User asks for circuit diagram
-├─ Natural language description → Parse components & topology → Build SchemDraw code
-├─ SPICE netlist text            → Parse netlist → Extract topology → Build SchemDraw code
+├─ Natural language description → Parse components & topology → Plan & build SchemDraw code
+├─ SPICE netlist text            → Parse netlist → Extract topology → Plan & build SchemDraw code
 ├─ Logic/Boolean expression      → Use logicparse() or logic gates
 ├─ Timing diagram                → Use timing diagram elements
 └─ Flowchart                     → Use flowchart elements
+
+**Do NOT render/plot the SVG during thinking or planning.**
+Only at the very final step, after the code is complete and presented,
+ask the user: "Shall I render and save the SVG?"
 ```
 
 ### Natural Language → Schematic
@@ -59,16 +63,16 @@ User asks for circuit diagram
 1. **Identify components** — resistors, capacitors, inductors, sources, diodes, transistors, opamps, grounds, etc.
 2. **Extract topology** — series connections ("followed by", "connected to"), parallel branches, node labels, values.
 3. **Plan layout** — typically left-to-right, top-to-bottom. Use anchors and `.push()`/`.pop()` for branches.
-4. **Generate SchemDraw code** — write a Python script that draws the circuit.
-5. **Execute and save** — run the script, save to the requested format.
+4. **Generate SchemDraw code** — write a Python script that draws the circuit (do NOT execute yet).
+5. **Present code to user** — show the planned script and ask whether to render the SVG.
 
 ### SPICE Netlist → Schematic
 
 1. **Parse the netlist** — extract component lines (R, C, L, D, Q, M, V, I, X) and their nodes/values.
 2. **Infer topology** — build a graph from node connections.
 3. **Assign positions** — lay out nodes and place components between them.
-4. **Generate SchemDraw code** — place each element between its nodes.
-5. **Execute and save**.
+4. **Generate SchemDraw code** — place each element between its nodes (do NOT execute yet).
+5. **Present code to user** — show the planned script and ask whether to render the SVG.
 
 Use `scripts/spice_parser.py` to parse standard SPICE netlists into JSON for easier consumption.
 
@@ -428,6 +432,7 @@ schemdraw.use('matplotlib') # switch back to Matplotlib
 8. **For complex circuits**, sketch the node layout on paper first, then translate to SchemDraw.
 9. **Use `logicparse()` for Boolean expressions** instead of manually placing logic gates.
 10. **Check `references/element-catalog.md`** when unsure about an element name or its anchors.
+11. **Revise wire routing with `elm.Wire(shape, k)`** — after placing all components, route connecting wires with explicit shapes to avoid wire-to-wire overlap and wire-to-gate-symbol overlap. Use `shape` for routing direction (e.g. `'-|'`, `'|-'`, `'-|-'`, `'|-|'`) and `k` to control bend radius/corner curvature.
 
 ## Resources
 

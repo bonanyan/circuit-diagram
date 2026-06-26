@@ -37,14 +37,22 @@ pip install schemdraw matplotlib
 
 ### 2. Enable in Your AI
 
-Clone the repo into your Reasonix skills directory:
+**Option A: `npx skills add` (recommended)**
+
+```bash
+npx skills add bonanyan/circuit-diagram
+```
+
+**Option B: Git clone**
 
 ```bash
 git clone git@github.com:bonanyan/circuit-diagram.git \
   ~/.reasonix/skills/circuit-diagram
 ```
 
-Or install via `install-capability` from the GitHub URL.
+**Option C: `install-capability`**
+
+Install via `install-capability` from the GitHub URL.
 
 ### 3. Draw with SchemDraw Directly
 
